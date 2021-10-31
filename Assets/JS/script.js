@@ -113,7 +113,7 @@ return actionContainerEl;
 }
 
 
-formEl.addEventListener("submit", taskFormHandler);
+
 
 var taskButtonHandler = function(event) {
     //console.log(event.target);
@@ -212,6 +212,28 @@ var saveTasks = function() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+//Get task items from localStorage
+//Convert tasks from string format back into array objects
+//iterate through a tasks array and create task elements on the page
+var loadTasks = function() {
+    var savedTasks = localStorage.getItem("tasks");
+    if (!savedTasks) {
+        return false;
+    }
+    console.log("saved tasks found!")
+
+    savedTasks = JSON.parse(savedTasks);
+
+    for (var i = 0; i < savedTasks.length; i++) {
+        createTaskEl(savedTasks[i]);
+    }
+
+}
+
+formEl.addEventListener("submit", taskFormHandler);
+
 pageContentEl.addEventListener("click", taskButtonHandler); 
 
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+
+loadTasks();
